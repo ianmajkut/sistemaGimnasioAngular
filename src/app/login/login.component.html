@@ -1,0 +1,28 @@
+<div class="container">
+          <div class="text-center">
+                    <img src="assets/gimnasioLogo.jpg" height="200" width=200>
+          </div>
+          <h3>Bienvenido. Ingrese sus datos</h3>
+          <form [formGroup]="formularioLogin">
+                    <div class="mb-3 mt-3">
+                      <label for="email" class="form-label">Correo Electrónico</label>
+                      <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Ingrese su correo" formControlName="email">
+                              <div *ngIf="formularioLogin.controls['email'].invalid && formularioLogin.controls['email'].dirty" class="alert alert-danger mt-2" role="alert">
+                                        <span *ngIf="formularioLogin.controls['email'].errors?.required">Correo requerido </span>
+                                        <span *ngIf="formularioLogin.controls['email'].errors?.email">Correo no valido</span>
+                              </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="password" class="form-label">Contraseña</label>
+                      <input type="password" (keyUp.enter)="ingresar()" class="form-control" id="password" placeholder="Ingrese su contraseña" formControlName="password">
+                              <div *ngIf="formularioLogin.controls['password'].invalid && formularioLogin.controls['password'].dirty" class="alert alert-danger mt-2" role="alert">
+                                        <span *ngIf="formularioLogin.controls['password'].errors?.required">Contraseña requerido </span>
+                                        <span *ngIf="formularioLogin.controls['password'].errors?.email">Contraseña no valido</span>
+                              </div>
+                    </div>
+                    <button type="submit" (click)="ingresar()" [disabled]="!formularioLogin.valid" class="btn btn-primary">Ingresar</button>
+          </form>
+          <div *ngIf="!datosCorrectos" class="alert alert-warning mt-3" role="alert">
+                    {{textoError}}
+          </div>
+</div>
