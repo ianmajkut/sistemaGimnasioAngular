@@ -17,7 +17,7 @@ export class AppComponent {
     this.auth.user.subscribe((usuario)=>{
       setTimeout(() => {
         this.cargando = false;
-        this.usuario = usuario;}, 1500)
+        this.usuario = usuario;}, 2000)
     })
   }
   login() {

@@ -3,9 +3,22 @@
           <button (click)="logout()">Logout</button>
 </div>
 <ng-template #showLogin>
-          <div *ngIf="cargando">
-                    cargando...
+          <div *ngIf="cargando" class="text-center">
+                    <div class="lds-ring">
+                              <div>
+
+                              </div>
+                              <div>
+
+                              </div>
+                              <div>
+
+                              </div>
+                              <div>
+
+                              </div>
+                    </div>
           </div>
-          <app-login></app-login>
+          <app-login *ngIf="!cargando"></app-login>
 </ng-template>
 <router-outlet></router-outlet>
