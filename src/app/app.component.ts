@@ -20,10 +20,6 @@ export class AppComponent {
         this.usuario = usuario;}, 2000)
     })
   }
-  login() {
-    this.auth.signInWithEmailAndPassword("ianedwinmajkut@gmail.com","123456789");
-  }
-  logout() {
-    this.auth.signOut();
-  }
+  
+  
 }

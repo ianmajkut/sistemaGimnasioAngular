@@ -8,15 +8,17 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { LoginComponent } from './login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { EncabezadoComponent } from './encabezado/encabezado.component';
+import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    EncabezadoComponent
+    EncabezadoComponent,
+    ListadoClientesComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { EncabezadoComponent } from './encabezado/encabezado.component';
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
     ReactiveFormsModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FormsModule,
   ],
   providers: [
     AngularFireAuth
