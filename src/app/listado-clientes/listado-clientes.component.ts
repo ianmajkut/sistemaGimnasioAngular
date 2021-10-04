@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { ItemsError } from 'ajv/dist/vocabularies/applicator/items2020';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,8 +14,20 @@ export class ListadoClientesComponent implements OnInit {
 
   constructor(  db: AngularFirestore) { 
     
-    this.clientes = db.collection("clientes").valueChanges().subscribe((resultado) => this.clientes = resultado )
+    this.clientes.length = 0
+    
+    db.collection("clientes").get().subscribe((resultado) => {
+      for(let item of resultado.docs){
+        
+        let cliente: any = item.data()
+        cliente.id = item.id
+        cliente.ref = item.ref
+        this.clientes.push(cliente)
+      } 
+      }
+    )
   }
+  
 
   ngOnInit(): void {
 
