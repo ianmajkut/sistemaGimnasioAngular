@@ -7,6 +7,7 @@ export const environment = {
   firebase: {
     apiKey: "AIzaSyDZgq2sdzQ0mJZdNvatbNtMN3T1wSteXzw",
     authDomain: "mastergym-ac026.firebaseapp.com",
+    databaseURL: "https://mastergym-ac026-default-rtdb.firebaseio.com",
     projectId: "mastergym-ac026",
     storageBucket: "mastergym-ac026.appspot.com",
     messagingSenderId: "980478726433",

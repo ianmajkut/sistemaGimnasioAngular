@@ -6,11 +6,11 @@
                     </div>
           </form>
           <div class="row mt-5">
-                    <div class="col-sm-3">
+                    <div class="col-sm-3" *ngFor="let cliente of clientes">
                               <div class="card text-center" >
-                                        <img src="assets/profile_pic.png" class="card-img-top p-3 img-fluid" alt="..." >
+                                        <img [src]="cliente.imgUrl" class="card-img-top p-3 img-fluid"  >
                                         <div class="card-body">
-                                                  <h5 class="card-title">Juan Martinez</h5>
+                                                  <h5 class="card-title">{{cliente.nombre}} {{cliente.apellido}}</h5>
                                                   <a href="#" class="card-link">Editar</a>
                                                   <a href="#" class="card-link text-danger">Desactivar</a>
                                         </div>

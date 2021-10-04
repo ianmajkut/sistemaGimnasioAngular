@@ -12,6 +12,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { EncabezadoComponent } from './encabezado/encabezado.component';
 import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
 
 @NgModule({
   declarations: [
@@ -28,9 +30,11 @@ import { ListadoClientesComponent } from './listado-clientes/listado-clientes.co
     ReactiveFormsModule,
     NgxSpinnerModule,
     FormsModule,
+    AngularFirestoreModule,
+    
   ],
   providers: [
-    AngularFireAuth
+    AngularFireAuth,
   ],
   bootstrap: [AppComponent]
 })
