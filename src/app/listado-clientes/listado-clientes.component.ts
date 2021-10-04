@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { ItemsError } from 'ajv/dist/vocabularies/applicator/items2020';
-import { Observable } from 'rxjs';
+
+
 
 @Component({
   selector: 'app-listado-clientes',
@@ -11,8 +11,8 @@ import { Observable } from 'rxjs';
 export class ListadoClientesComponent implements OnInit {
 
   clientes: any = new Array<any>()
-
-  constructor(  db: AngularFirestore) { 
+  
+  constructor( db: AngularFirestore) { 
     
     this.clientes.length = 0
     
@@ -29,8 +29,8 @@ export class ListadoClientesComponent implements OnInit {
   }
   
 
-  ngOnInit(): void {
-
+  ngOnInit() {
+  
   }
 
 }

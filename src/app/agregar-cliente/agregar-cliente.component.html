@@ -1,0 +1,75 @@
+<div class="container mt-4">
+          <form [formGroup]="formularioCliente">
+                    <div class="row">
+                              <div class="col-sm-4">
+                                        <div class="mb-3 form-group">
+                                                  <label for="nombre" class="form-label">Nombre</label>
+                                                  <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre..." formControlName="nombre"> 
+                                                  <div *ngIf="formularioCliente.controls['nombre'].invalid && formularioCliente.controls['nombre'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioCliente.controls['nombre'].errors?.required">Nombre requerido </span>
+                                                  </div>
+                                        </div>  
+                              </div>
+                              <div class="col-sm-4">
+                                        <div class="mb-3 form-group">
+                                                  <label for="apellido" class="form-label">Apellido</label>
+                                                  <input type="text" class="form-control" id="apellido" placeholder="Ingrese el apellido..." formControlName="apellido"> 
+                                                  <div *ngIf="formularioCliente.controls['apellido'].invalid && formularioCliente.controls['apellido'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioCliente.controls['apellido'].errors?.required">Apellido requerido </span>
+                                                  </div>
+                                        </div>
+                              </div>
+                              <div class="col-sm-4">
+                                        <div class="mb-3 form-group">
+                                                  <label for="correo" class="form-label">Correo Electrónico</label>
+                                                  <input type="email" class="form-control" id="correo" aria-describedby="emailHelp" placeholder="Ingrese el correo electrónico..." formControlName="correo"> 
+                                                  <div *ngIf="formularioCliente.controls['correo'].invalid && formularioCliente.controls['correo'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioCliente.controls['correo'].errors?.required">Correo requerido </span>
+                                                            <span *ngIf="formularioCliente.controls['correo'].errors?.email">Correo no valido</span>
+                                                  </div>
+                                        </div> 
+                              </div>
+                              <div class="col-sm-4">
+                                        <div class="mb-3 form-group">
+                                                  <label for="dni" class="form-label">DNI</label>
+                                                  <input type="text" class="form-control" id="dni" placeholder="Ingrese el dni..." formControlName="dni"> 
+                                                  <div *ngIf="formularioCliente.controls['dni'].invalid && formularioCliente.controls['dni'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioCliente.controls['dni'].errors?.required">DNI requerido </span>
+                                                  </div>
+                                        </div> 
+                              </div>
+                              <div class="col-sm-4">
+                                        <div class="mb-3 form-group">
+                                                  <label for="nacimiento" class="form-label">Fecha Nacimiento</label>
+                                                  <input type="date" class="form-control" id="nacimiento" placeholder="Ingrese fecha de nacimiento..." formControlName="fechaNacimiento"> 
+                                                  <div *ngIf="formularioCliente.controls['fechaNacimiento'].invalid && formularioCliente.controls['fechaNacimiento'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioCliente.controls['fechaNacimiento'].errors?.required">Fecha requerida </span>
+                                                  </div>
+                                        </div> 
+                              </div>
+                              <div class="col-sm-4">
+                                        <div class="mb-3 form-group">
+                                                  <label for="telefono" class="form-label">Teléfono</label>
+                                                  <input type="tel" class="form-control" id="telefono" placeholder="Ingrese teléfono..." formControlName="telefono"> 
+                                                  <div *ngIf="formularioCliente.controls['telefono'].invalid && formularioCliente.controls['telefono'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioCliente.controls['telefono'].errors?.required">Teléfono requerido </span>
+                                                  </div>
+                                        </div> 
+                              </div>
+                              <label class="mb-3" >Imagen</label>
+                              <div class="col-sm-12">
+                                        <div class="mb-3 form-group">
+                                                  <input type="file" class="form-control-file"  placeholder="Agregue imagen de perfil..." formControlName="imgUrl"> 
+                                        </div> 
+                              </div>
+                              
+                    </div>
+
+                    <div class="progress mb-5">
+                              <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" [disabled]="formularioCliente.invalid" (click)="agregar()">Agregar</button>
+          </form>
+
+</div>

@@ -13,6 +13,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { EncabezadoComponent } from './encabezado/encabezado.component';
 import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { AgregarClienteComponent } from './agregar-cliente/agregar-cliente.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
     AppComponent,
     LoginComponent,
     EncabezadoComponent,
-    ListadoClientesComponent
+    ListadoClientesComponent,
+    AgregarClienteComponent
   ],
   imports: [
     BrowserModule,
