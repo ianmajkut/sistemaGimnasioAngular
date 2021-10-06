@@ -3,7 +3,8 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { useFunc } from 'ajv/dist/compile/util';
+import Swal from 'sweetalert2'
+import { MensajesServiceService } from '../services/mensajes-service.service';
 
 @Component({
   selector: 'app-agregar-cliente',
@@ -16,7 +17,7 @@ export class AgregarClienteComponent implements OnInit {
   urlImagen: string = ""
   esEditable : boolean = false
   id! : string
-  constructor( private fb: FormBuilder, private storage: AngularFireStorage, private db : AngularFirestore, private activeRoute: ActivatedRoute) { }
+  constructor( private fb: FormBuilder, private storage: AngularFireStorage, private db : AngularFirestore, private activeRoute: ActivatedRoute, private msg: MensajesServiceService) { }
 
   ngOnInit(): void {
     
@@ -57,7 +58,7 @@ export class AgregarClienteComponent implements OnInit {
     this.formularioCliente.value.fechaNacimiento = new Date(this.formularioCliente.value.fechaNacimiento)
     //console.log(this.formularioCliente.value)
     this.db.collection("clientes").add(this.formularioCliente.value).then((finalizo)=>{
-      console.log("Registro Creado")
+      this.msg.mensajeCorrecto("Cliente agregado correctamente")
     })
   }
   
@@ -65,8 +66,10 @@ export class AgregarClienteComponent implements OnInit {
     this.formularioCliente.value.imgUrl = this.urlImagen
     this.formularioCliente.value.fechaNacimiento = new Date(this.formularioCliente.value.fechaNacimiento)
     this.db.doc('clientes/'+ this.id).update(this.formularioCliente.value).then((resultado) =>{
-      console.log("Editado Correctamente")
-    }).catch((err) => console.log(err))
+      this.msg.mensajeCorrecto("Cliente editado correctamente")
+    }).catch((err) => {
+      this.msg.mensajeError("Error", "Ocurrió un error al editar el usuario")
+    })
   }
 
   subirImagen(event: any){
