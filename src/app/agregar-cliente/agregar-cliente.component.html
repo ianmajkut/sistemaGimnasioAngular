@@ -59,14 +59,16 @@
                               <label class="mb-3" >Imagen</label>
                               <div class="col-sm-12">
                                         <div class="mb-3 form-group">
-                                                  <input type="file" class="form-control-file"  placeholder="Agregue imagen de perfil..." formControlName="imgUrl"> 
+                                                  <input type="file" (change)="subirImagen($event)" class="form-control-file"  placeholder="Agregue imagen de perfil..." formControlName="imgUrl"> 
                                         </div> 
                               </div>
                               
                     </div>
 
-                    <div class="progress mb-5">
-                              <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                    <div class="col-sm-12">
+                              <div class="mb-2">
+                                <progressbar [value]="porcentajeSubida" type="danger" [striped]="true">{{porcentajeSubida}}%</progressbar>
+                              </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary" [disabled]="formularioCliente.invalid" (click)="agregar()">Agregar</button>

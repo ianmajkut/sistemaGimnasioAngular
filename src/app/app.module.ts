@@ -14,6 +14,8 @@ import { EncabezadoComponent } from './encabezado/encabezado.component';
 import { ListadoClientesComponent } from './listado-clientes/listado-clientes.component';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { AgregarClienteComponent } from './agregar-cliente/agregar-cliente.component';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import { ProgressbarModule } from 'ngx-bootstrap/progressbar';
 
 
 @NgModule({
@@ -29,10 +31,12 @@ import { AgregarClienteComponent } from './agregar-cliente/agregar-cliente.compo
     AppRoutingModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase),
+    ProgressbarModule.forRoot(),
     ReactiveFormsModule,
     NgxSpinnerModule,
     FormsModule,
     AngularFirestoreModule,
+    AngularFireStorageModule,
     
   ],
   providers: [
