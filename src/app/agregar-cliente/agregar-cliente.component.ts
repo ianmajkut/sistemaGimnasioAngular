@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -10,7 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AgregarClienteComponent implements OnInit {
   formularioCliente!: FormGroup
   porcentajeSubida: number = 0
-  constructor( private fb: FormBuilder, private storage: AngularFireStorage) { }
+  urlImagen: string = ""
+  constructor( private fb: FormBuilder, private storage: AngularFireStorage, private db : AngularFirestore) { }
 
   ngOnInit(): void {
     this.formularioCliente = this.fb.group({
@@ -27,25 +29,35 @@ export class AgregarClienteComponent implements OnInit {
   }
 
   agregar(){
-    console.log(this.formularioCliente.value)
+    this.formularioCliente.value.imgUrl = this.urlImagen
+    this.formularioCliente.value.fechaNacimiento = new Date(this.formularioCliente.value.fechaNacimiento)
+    //console.log(this.formularioCliente.value)
+    this.db.collection("clientes").add(this.formularioCliente.value).then((finalizo)=>{
+      console.log("Registro Creado")
+    })
   }
 
   subirImagen(event: any){
-    let nombre = new Date().getTime().toString()
-    const file = event.target.files[0];
-    let extension = file.name.toString().substring(file.name.toString().lastIndexOf('.'))
-    const filePath = 'clientes/' + nombre + extension;
-    const ref = this.storage.ref(filePath);
-    const task = ref.put(file);
-    task.then((objeto)=>{
-      console.log('imagen subida')
-      ref.getDownloadURL().subscribe((url)=>{
-        console.log(url)
+
+    if(event.target.files.length>0){
+
+      let nombre = new Date().getTime().toString()
+      const file = event.target.files[0];
+      let extension = file.name.toString().substring(file.name.toString().lastIndexOf('.'))
+      const filePath = 'clientes/' + nombre + extension;
+      const ref = this.storage.ref(filePath);
+      const task = ref.put(file);
+      task.then((objeto)=>{
+        console.log('imagen subida')
+        ref.getDownloadURL().subscribe((url)=>{
+          this.urlImagen = url
+        }) 
       })
-    })
-    task.percentageChanges().subscribe((porcentaje)=>{
-      this.porcentajeSubida = porcentaje as number
-    })
+      task.percentageChanges().subscribe((porcentaje)=>{
+        this.porcentajeSubida = porcentaje as number
+      })
+
+    }
     
   }
 
