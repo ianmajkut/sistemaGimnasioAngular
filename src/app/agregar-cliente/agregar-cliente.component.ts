@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { useFunc } from 'ajv/dist/compile/util';
 
 @Component({
   selector: 'app-agregar-cliente',
@@ -12,9 +14,12 @@ export class AgregarClienteComponent implements OnInit {
   formularioCliente!: FormGroup
   porcentajeSubida: number = 0
   urlImagen: string = ""
-  constructor( private fb: FormBuilder, private storage: AngularFireStorage, private db : AngularFirestore) { }
+  esEditable : boolean = false
+  id! : string
+  constructor( private fb: FormBuilder, private storage: AngularFireStorage, private db : AngularFirestore, private activeRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
+    
     this.formularioCliente = this.fb.group({
       nombre: ["", Validators.required],
       apellido: ["", Validators.required],
@@ -24,8 +29,27 @@ export class AgregarClienteComponent implements OnInit {
       dni: ["", Validators.required],
       fechaNacimiento: ["", Validators.required],
       telefono: ["", Validators.required],
-      imgUrl: ["", Validators.required],
+      imgUrl: [""],
     })
+
+    this.id = this.activeRoute.snapshot.params.clienteID
+    if(this.id != undefined){
+      this.esEditable = true
+      this.db.doc<any>('clientes/'+ this.id).valueChanges().subscribe((clientes)=>{
+        console.log(clientes)
+        this.formularioCliente.setValue({
+        nombre: clientes.nombre ,
+        apellido: clientes.apellido ,
+        correo: clientes.correo ,
+        dni: clientes.dni ,
+        fechaNacimiento: new Date(clientes.fechaNacimiento.seconds * 1000).toISOString().substr(0, 10),
+        telefono: clientes.telefono ,
+        imgUrl: "" ,
+        })
+        this.urlImagen = clientes.imgUrl
+      })
+    }
+
   }
 
   agregar(){
@@ -35,6 +59,14 @@ export class AgregarClienteComponent implements OnInit {
     this.db.collection("clientes").add(this.formularioCliente.value).then((finalizo)=>{
       console.log("Registro Creado")
     })
+  }
+  
+  editar(){
+    this.formularioCliente.value.imgUrl = this.urlImagen
+    this.formularioCliente.value.fechaNacimiento = new Date(this.formularioCliente.value.fechaNacimiento)
+    this.db.doc('clientes/'+ this.id).update(this.formularioCliente.value).then((resultado) =>{
+      console.log("Editado Correctamente")
+    }).catch((err) => console.log(err))
   }
 
   subirImagen(event: any){
@@ -58,7 +90,7 @@ export class AgregarClienteComponent implements OnInit {
       })
 
     }
-    
+
   }
 
 }
