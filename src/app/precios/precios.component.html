@@ -3,38 +3,50 @@
                     <div class="col-sm-8">
                               <h4>Precios</h4>
                               <ul>
-                                       <li>Precio de la Semana</li>
-                                       <li>Suscripción mensual</li> 
+                                       <li *ngFor="let precio of precios">{{precio.nombre}}</li>
+                                       
                               </ul>
                     </div>
                     <div class="col-sm-4">
                               <h4>Agregar/Editar</h4>
-                              <form>
+                              <form [formGroup]="formularioPrecio">
                                         <div class="form-group">
                                                   <label for="">Nombre</label>
-                                                  <input class="form-control" type="text">
+                                                  <input class="form-control" type="text" formControlName="nombre">
+                                                  <div *ngIf="formularioPrecio.controls['nombre'].invalid && formularioPrecio.controls['nombre'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioPrecio.controls['nombre'].errors?.required">Nombre requerido </span>
+                                                  </div>
                                         </div>
                                         <div class="form-group">
                                                   <label for="">Costo</label>
-                                                  <input class="form-control" type="number">
+                                                  <input class="form-control" type="number" formControlName="costo">
+                                                  <div *ngIf="formularioPrecio.controls['costo'].invalid && formularioPrecio.controls['costo'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioPrecio.controls['costo'].errors?.required">Costo requerido </span>
+                                                  </div>
                                         </div>
                                         <div class="form-group">
                                                   <label for="">Duración</label>
-                                                  <input class="form-control" type="number">
+                                                  <input class="form-control" type="number" formControlName="duracion">
+                                                  <div *ngIf="formularioPrecio.controls['duracion'].invalid && formularioPrecio.controls['duracion'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioPrecio.controls['nombre'].errors?.required">Duración requerida </span>
+                                                  </div>
                                         </div>
                                         <div class="form-group">
                                                   <label for="">Tipo de Duración</label>
-                                                  <select class="form-control">
+                                                  <select class="form-control" formControlName="tipoDuracion">
                                                             <option value="1">Día</option>
                                                             <option value="2">Semana</option>
                                                             <option value="3">Quincena</option>
                                                             <option value="4">Mes</option>
                                                             <option value="5">Año</option>
                                                   </select>
+                                                  <div *ngIf="formularioPrecio.controls['tipoDuracion'].invalid && formularioPrecio.controls['tipoDuracion'].dirty" class="alert alert-danger mt-2" role="alert">
+                                                            <span *ngIf="formularioPrecio.controls['tipoDuracion'].errors?.required">Tipo de duración requerido </span>
+                                                  </div>
                                         </div>
                                         <div class="mt-3">
-                                                  <button class="btn btn-primary">Agregar</button>
-                                                  <button class="btn btn-danger">Editar</button>
+                                                  <button class="btn btn-primary " (click)="agregar()" [disabled]="formularioPrecio.invalid">Agregar</button>
+                                                  <button class="btn btn-danger mx-2" [disabled]="formularioPrecio.invalid">Editar</button>
                                         </div>
                                         
                               </form>
