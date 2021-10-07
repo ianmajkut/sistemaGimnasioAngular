@@ -10,4 +10,5 @@ export class Cliente{
           telefono!: number
           cedula!: string
           ref!: DocumentReference
+          visible!: boolean
 }
