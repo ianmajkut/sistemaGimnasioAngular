@@ -43,64 +43,87 @@ export class InscripcionComponent implements OnInit {
   }
 
   guardar(){
-    console.log(this.inscripcion)
+    //console.log(this.inscripcion) 
+    if(this.inscripcion.validar().esValido){
+      console.log("Guardando..")
+    }
+    else{
+      console.log(this.inscripcion.validar().mensaje)
+    }
   }
 
   seleccionarPrecio(event : any){
-    let valorEvento : string = event.target.value
-    this.precioSeleccionado = this.precios.find((x)=> x.id == valorEvento)
-    this.inscripcion.precios = this.precioSeleccionado?.ref as DocumentReference<any> 
 
-    this.inscripcion.subtotal = this.precioSeleccionado?.costo as number
-    this.inscripcion.impuesto = this.inscripcion.subtotal * 0.21 // Porcentaje IVA en caso de Argentina
-    this.inscripcion.total = this.inscripcion.impuesto + this.inscripcion.subtotal
-    //console.log(this.precioSeleccionado)
-    this.inscripcion.fecha = new Date()
-    /*
-      1: Dia, 2: Semana, 3: Quincena, 4: Mes, 5: Año
-    */
-    if(this.precioSeleccionado?.tipoDuracion == 1){
+    let valorEvento : string = event.target.value
+
+    if(valorEvento != "null"){
       
-      let dias: number = this.precioSeleccionado.duracion 
-      let fechaFinal = 
-      new Date(this.inscripcion.fecha.getFullYear(), this.inscripcion.fecha.getMonth(), this.inscripcion.fecha.getDate() + dias )
-      this.inscripcion.fechaFinal = fechaFinal
-      
-    }
-    if(this.precioSeleccionado?.tipoDuracion == 2){
-      
-      let dias: number = this.precioSeleccionado.duracion * 7
-      let fechaFinal = 
-      new Date(this.inscripcion.fecha.getFullYear(), this.inscripcion.fecha.getMonth(), this.inscripcion.fecha.getDate() + dias )
-      this.inscripcion.fechaFinal = fechaFinal
-      
-    }
-    if(this.precioSeleccionado?.tipoDuracion == 3){
-      
-      let dias: number = this.precioSeleccionado.duracion * 15
-      let fechaFinal = 
-      new Date(this.inscripcion.fecha.getFullYear(), this.inscripcion.fecha.getMonth(), this.inscripcion.fecha.getDate() + dias )
-      this.inscripcion.fechaFinal = fechaFinal
-      
-    }
-    if(this.precioSeleccionado?.tipoDuracion == 4){
-      let meses = this.precioSeleccionado.duracion + this.inscripcion.fecha.getMonth()
-      let anio: number = this.inscripcion.fecha.getFullYear()
-      let dia: number = this.inscripcion.fecha.getDate()
-      let fechaFinal = 
-      new Date(anio, meses, dia)
-      this.inscripcion.fechaFinal = fechaFinal
-      
-    }
-    if(this.precioSeleccionado?.tipoDuracion == 5){
-      
-      let meses = this.inscripcion.fecha.getMonth()
-      let anio: number = this.inscripcion.fecha.getFullYear() + this.precioSeleccionado.duracion
-      let dia: number = this.inscripcion.fecha.getDate()
-      let fechaFinal = 
-      new Date(anio, meses, dia)
-      this.inscripcion.fechaFinal = fechaFinal
-      
+      this.precioSeleccionado = this.precios.find((x)=> x.id == valorEvento)
+      this.inscripcion.precios = this.precioSeleccionado?.ref as DocumentReference<any> 
+
+      this.inscripcion.subtotal = this.precioSeleccionado?.costo as number
+      this.inscripcion.impuesto = this.inscripcion.subtotal * 0.21 // Porcentaje IVA en caso de Argentina
+      this.inscripcion.total = this.inscripcion.impuesto + this.inscripcion.subtotal
+      //console.log(this.precioSeleccionado)
+      this.inscripcion.fecha = new Date()
+      /*
+        1: Dia, 2: Semana, 3: Quincena, 4: Mes, 5: Año
+      */
+      if(this.precioSeleccionado?.tipoDuracion == 1){
+        
+        let dias: number = this.precioSeleccionado.duracion 
+        let fechaFinal = 
+        new Date(this.inscripcion.fecha.getFullYear(), this.inscripcion.fecha.getMonth(), this.inscripcion.fecha.getDate() + dias )
+        this.inscripcion.fechaFinal = fechaFinal
+        
+      }
+      if(this.precioSeleccionado?.tipoDuracion == 2){
+        
+        let dias: number = this.precioSeleccionado.duracion * 7
+        let fechaFinal = 
+        new Date(this.inscripcion.fecha.getFullYear(), this.inscripcion.fecha.getMonth(), this.inscripcion.fecha.getDate() + dias )
+        this.inscripcion.fechaFinal = fechaFinal
+        
+      }
+      if(this.precioSeleccionado?.tipoDuracion == 3){
+        
+        let dias: number = this.precioSeleccionado.duracion * 15
+        let fechaFinal = 
+        new Date(this.inscripcion.fecha.getFullYear(), this.inscripcion.fecha.getMonth(), this.inscripcion.fecha.getDate() + dias )
+        this.inscripcion.fechaFinal = fechaFinal
+        
+      }
+      if(this.precioSeleccionado?.tipoDuracion == 4){
+        let meses = this.precioSeleccionado.duracion + this.inscripcion.fecha.getMonth()
+        let anio: number = this.inscripcion.fecha.getFullYear()
+        let dia: number = this.inscripcion.fecha.getDate()
+        let fechaFinal = 
+        new Date(anio, meses, dia)
+        this.inscripcion.fechaFinal = fechaFinal
+        
+      }
+      if(this.precioSeleccionado?.tipoDuracion == 5){
+        
+        let meses = this.inscripcion.fecha.getMonth()
+        let anio: number = this.inscripcion.fecha.getFullYear() + this.precioSeleccionado.duracion
+        let dia: number = this.inscripcion.fecha.getDate()
+        let fechaFinal = 
+        new Date(anio, meses, dia)
+        this.inscripcion.fechaFinal = fechaFinal
+        
+      }
+
+    }else{
+
+      this.precioSeleccionado = new Precio()
+      this.inscripcion.fecha = null as unknown as Date
+      this.inscripcion.fechaFinal = null as unknown as Date
+      this.inscripcion.precios = null as unknown as DocumentReference<any> 
+      this.inscripcion.subtotal = 0
+      this.inscripcion.impuesto = 0
+      this.inscripcion.total = 0
+
+
     }
 
   }
