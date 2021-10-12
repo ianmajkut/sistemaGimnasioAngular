@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { DocumentReference } from '@angular/fire/compat/firestore';
+import { AngularFirestore, DocumentReference } from '@angular/fire/compat/firestore';
 import { empty } from 'rxjs';
 import { Cliente } from '../models/cliente';
 import { Inscripcion } from '../models/inscripcion';
+import { Precio } from '../models/precio';
 
 @Component({
   selector: 'app-inscripcion',
@@ -12,9 +13,19 @@ import { Inscripcion } from '../models/inscripcion';
 export class InscripcionComponent implements OnInit {
   inscripcion: Inscripcion= new Inscripcion() 
   clienteSeleccionado : Cliente = new Cliente()
-  constructor() { }
+  precios: Precio[] = new Array<Precio>()
+  precioSeleccionado: Precio | undefined = new Precio()
+  constructor(private db : AngularFirestore) { }
 
   ngOnInit(): void {
+    this.db.collection('precios').get().subscribe((resultado)=>{
+      resultado.docs.forEach((item)=>{
+        let precio : any = item.data() as Precio
+        precio.id = item.id
+        precio.ref = item.ref
+        this.precios.push(precio)
+      })
+    })
   }
 
   asignarCliente(cliente: Cliente){
@@ -33,6 +44,13 @@ export class InscripcionComponent implements OnInit {
 
   guardar(){
     console.log(this.inscripcion)
+  }
+
+  seleccionarPrecio(event : any){
+    let valorEvento : string = event.target.value
+    this.precioSeleccionado = this.precios.find((x)=> x.id == valorEvento)
+    this.inscripcion.precios = this.precioSeleccionado?.ref as DocumentReference<any> 
+    //console.log(this.precioSeleccionado)
   }
 
 }
