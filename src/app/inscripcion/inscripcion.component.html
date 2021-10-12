@@ -11,6 +11,16 @@
                                         </select>
                               </div>
 
+                              <div class="form-control mt-3">
+                                        <label for="">Fecha Inicio</label>
+                                        <input class="form-control" [value]="inscripcion.fecha | date" type="text" disabled>
+                              </div>
+
+                              <div class="form-control mt-3">
+                                        <label for="">Fecha Finaliza</label>
+                                        <input class="form-control" [value]="inscripcion.fechaFinal | date" type="text" disabled>
+                              </div>
+
                               <button class="btn btn-primary mt-2" (click)="guardar()">Guardar</button>
                     </div>
                     <div class="col-sm-6">
