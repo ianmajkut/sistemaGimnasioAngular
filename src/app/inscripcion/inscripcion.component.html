@@ -21,10 +21,27 @@
                                         <input class="form-control" [value]="inscripcion.fechaFinal | date" type="text" disabled>
                               </div>
 
-                              <button class="btn btn-primary mt-2" (click)="guardar()">Guardar</button>
+                              <div class="form-control mt-3">
+                                        <label for="">Sub Total</label>
+                                        <input class="form-control" [value]="inscripcion.subtotal" type="number" disabled>
+                              </div>
+
+                              <div class="form-control mt-3">
+                                        <label for="">Impuesto</label>
+                                        <input class="form-control" [value]="inscripcion.impuesto" type="number" disabled>
+                              </div>
+
+                              <div class="form-control mt-3">
+                                        <label for="">Total</label>
+                                        <input class="form-control" [value]="inscripcion.total " type="number" disabled>
+                              </div>
+
+                              <button class="btn btn-primary mt-5" (click)="guardar()">Guardar</button>
                     </div>
-                    <div class="col-sm-6">
-                              segundo
+                    <div class="col-sm-6 text-center">
+                              <div *ngIf="clienteSeleccionado.imgUrl" class="imgCliente">
+                                        <img [src]="clienteSeleccionado.imgUrl">
+                              </div>
                     </div>
           </div>
 </div>

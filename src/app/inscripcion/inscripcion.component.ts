@@ -50,6 +50,10 @@ export class InscripcionComponent implements OnInit {
     let valorEvento : string = event.target.value
     this.precioSeleccionado = this.precios.find((x)=> x.id == valorEvento)
     this.inscripcion.precios = this.precioSeleccionado?.ref as DocumentReference<any> 
+
+    this.inscripcion.subtotal = this.precioSeleccionado?.costo as number
+    this.inscripcion.impuesto = this.inscripcion.subtotal * 0.21 // Porcentaje IVA en caso de Argentina
+    this.inscripcion.total = this.inscripcion.impuesto + this.inscripcion.subtotal
     //console.log(this.precioSeleccionado)
     this.inscripcion.fecha = new Date()
     /*
