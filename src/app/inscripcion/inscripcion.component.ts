@@ -4,6 +4,7 @@ import { empty } from 'rxjs';
 import { Cliente } from '../models/cliente';
 import { Inscripcion } from '../models/inscripcion';
 import { Precio } from '../models/precio';
+import { MensajesServiceService } from '../services/mensajes-service.service';
 
 @Component({
   selector: 'app-inscripcion',
@@ -13,9 +14,10 @@ import { Precio } from '../models/precio';
 export class InscripcionComponent implements OnInit {
   inscripcion: Inscripcion= new Inscripcion() 
   clienteSeleccionado : Cliente = new Cliente()
+  idPrecio: string = ""
   precios: Precio[] = new Array<Precio>()
   precioSeleccionado: Precio | undefined = new Precio()
-  constructor(private db : AngularFirestore) { }
+  constructor(private db : AngularFirestore, private msg: MensajesServiceService) { }
 
   ngOnInit(): void {
     this.db.collection('precios').get().subscribe((resultado)=>{
@@ -45,10 +47,27 @@ export class InscripcionComponent implements OnInit {
   guardar(){
     //console.log(this.inscripcion) 
     if(this.inscripcion.validar().esValido){
-      console.log("Guardando..")
+      let inscripcionAgregar = {
+        fecha: this.inscripcion.fecha, 
+        fechaFinal: this.inscripcion.fechaFinal,
+        precios: this.inscripcion.precios,
+        cliente: this.inscripcion.cliente,
+        subtotal: this.inscripcion.subtotal,
+        impuesto: this.inscripcion.impuesto,
+        total: this.inscripcion.total,
+      }
+      this.db.collection('inscripciones').add(inscripcionAgregar).then((resultado)=>{
+        this.inscripcion = new Inscripcion()
+        this.clienteSeleccionado = new Cliente()
+        this.precioSeleccionado = new Precio()
+        this.idPrecio = ""
+        //console.log("Guardando..")
+        this.msg.mensajeCorrecto("Inscripción guardada correctamente")
+      })
     }
     else{
-      console.log(this.inscripcion.validar().mensaje)
+      //console.log(this.inscripcion.validar().mensaje)
+      this.msg.mensajeAdvertencia("Advertencia",this.inscripcion.validar().mensaje)
     }
   }
 
