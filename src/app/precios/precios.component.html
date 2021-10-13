@@ -3,10 +3,9 @@
                     <div class="col-sm-8">
                               <h4>Precios</h4>
                               <ul>
-                                       <li *ngFor="let precio of precios" (click)="editarPrecio(precio)">
+                                        <li style= "color:blue;" *ngFor="let precio of precios" (click)="editarPrecio(precio)">
                                         {{precio.nombre}}
                                         </li>
-                                       
                               </ul>
                     </div>
                     <div class="col-sm-4">

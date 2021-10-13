@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxSpinnerService } from 'ngx-spinner';
+import firebase from 'firebase/compat/app';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,7 @@ export class LoginComponent implements OnInit {
       this.spinner.show();
       this.auth.signInWithEmailAndPassword(this.formularioLogin.value.email,this.formularioLogin.value.password)
       .then((usuario)=>{
-      console.log(usuario)
+      //console.log(usuario)
       setTimeout(() => {
         this.spinner.hide();
       }, 5000);
@@ -53,6 +54,26 @@ export class LoginComponent implements OnInit {
       this.textoError = "Revisa que los datos estén correctos"
     }
     
+  }
+
+  ingresarGoogle(){
+    this.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider())
+    .then((usuario)=>{
+      //console.log(usuario)
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 5000);
+      }
+      )
+      .catch((error)=>{
+        setTimeout(() => {
+          /** spinner ends after 5 seconds */
+          this.spinner.hide();
+          
+          this.textoError = error.message
+        }, 2000);
+      })
+      
   }
 
 }
