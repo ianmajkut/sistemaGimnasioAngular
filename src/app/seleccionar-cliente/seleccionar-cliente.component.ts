@@ -24,7 +24,7 @@ export class SeleccionarClienteComponent implements OnInit {
         cliente.visible = false
         this.clientes.push(cliente)
       })
-      console.log(this.clientes)
+      //console.log(this.clientes)
     })
   }
 

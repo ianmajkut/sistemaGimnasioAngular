@@ -37,7 +37,7 @@ export class AgregarClienteComponent implements OnInit {
     if(this.id != undefined){
       this.esEditable = true
       this.db.doc<any>('clientes/'+ this.id).valueChanges().subscribe((clientes)=>{
-        console.log(clientes)
+        //console.log(clientes)
         this.formularioCliente.setValue({
         nombre: clientes.nombre ,
         apellido: clientes.apellido ,
